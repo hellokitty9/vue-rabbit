@@ -16,7 +16,7 @@ const router = createRouter({
       component: Layout,
       children: [
         {
-          path: '',
+          path: '', // 设置为空时, 自动渲染
           component: Home
         },
         {
