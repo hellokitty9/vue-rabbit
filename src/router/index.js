@@ -1,5 +1,5 @@
- // createRouter: 创建 router实例对象
- // createWebHistory: 创建 history模式的路由
+// createRouter: 创建 router实例对象
+// createWebHistory: 创建 history模式的路由
 
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from '@/views/Login/index.vue'
@@ -12,7 +12,7 @@ const router = createRouter({
   // path 和 component对应关系的位置
   routes: [
     {
-      path:'/',
+      path: '/',
       component: Layout,
       children: [
         {
@@ -20,13 +20,13 @@ const router = createRouter({
           component: Home
         },
         {
-          path: 'category',
+          path: 'category/:id',
           component: Category
         }
       ]
     },
     {
-      path:'/login',
+      path: '/login',
       component: Login
     }
   ]
