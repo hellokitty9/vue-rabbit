@@ -25,7 +25,7 @@ onMounted(() => getGoods())
                     <el-breadcrumb-item :to="{ path: `/category/sub/${goods.categories?.[0].id}` }">{{
                         goods.categories?.[0].name }}
                     </el-breadcrumb-item>
-                    <el-breadcrumb-item>抓绒保暖，毛毛虫子儿童运动鞋</el-breadcrumb-item>
+                    <el-breadcrumb-item>朱炳仁铜·猫型吉祥物装饰工艺摆件</el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
             <!-- 商品信息 -->
@@ -34,7 +34,7 @@ onMounted(() => getGoods())
                     <div class="goods-info">
                         <div class="media">
                             <!-- 图片预览区 -->
-                            <ImageView />
+                            <ImageView :image-list="goods.mainPictures" />
                             <!-- 统计数量 -->
                             <ul class="goods-sales">
                                 <li>
