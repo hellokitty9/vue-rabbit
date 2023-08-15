@@ -3,6 +3,11 @@ import { ref } from 'vue'
 
 // 表单校验(账号名+密码)
 
+import { loginAPI } from '@/apis/user'
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+import { useRouter } from "vue-router"
+
 // 1. 准备表单对象
 const form = ref({
     account: '',
@@ -12,11 +17,30 @@ const form = ref({
 // 2. 准备规则对象
 const rules = {
     account: [
-        { required: true, message: '用户名不能为空', trigger: 'blur' }
+        { required: true, message: '用户名不能为空', trigger: 'blur' },
+        // {
+        //     validator: (rule, value, callback) => {
+        //         if (/\W/.test(value)) {
+        //             callback(new Error('用户名只能包含字母、数字、下划线'));
+        //         } else {
+        //             callback();
+        //         }
+        //     }
+        // }
     ],
     password: [
         { required: true, message: '密码不能为空', trigger: 'blur' },
-        { min: 6, max: 14, message: '密码长度为6-14个字符', trigger: 'blur' }
+        { min: 6, max: 14, message: '密码长度为6-14个字符', trigger: 'blur' },
+        // {
+        //     validator: (rule, value, callback) => {
+        //         if (/\W/.test(value) || /(_)/.test(value)) {
+        //             callback(new Error('密码只能包含字母、数字'));
+        //         }
+        //         else {
+        //             callback();
+        //         }
+        //     }
+        // }
     ],
     agree: [
         {
@@ -38,11 +62,21 @@ const rules = {
 
 // 3. 获取form实例做统一校验
 const formRef = ref(null)
+const router = useRouter()
 const doLogin = () => {
+    const { account, password } = form.value
     // 调用实例方法
-    formRef.value.validate((valid) => {
+    formRef.value.validate(async (valid) => {
         // valid: 所有表单都通过校验才为true
         console.log(valid)
+        if (valid) {
+            const res = await loginAPI({ account, password })
+            console.log(res);
+            // 1. 提示用户
+            ElMessage({ type: 'success', message: '登录成功' })
+            // 2. 跳转首页
+            router.replace({ path: '/' })
+        }
     })
 }
 </script>
@@ -79,7 +113,7 @@ const doLogin = () => {
                             </el-form-item>
                             <el-form-item prop="agree" label-width="22px">
                                 <el-checkbox size="large" v-model="form.agree">
-                                    我已同意隐私条款和服务条款
+                                    我已同意《隐私条款和服务条款》
                                 </el-checkbox>
                             </el-form-item>
                             <el-button size="large" class="subBtn" @click="doLogin">点击登录</el-button>
